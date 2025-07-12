@@ -1,0 +1,105 @@
+// index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iPhone Shortcuts Guide</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>iPhone Shortcuts Guide</h1>
+    <input type="text" id="search" placeholder="Search shortcuts..." />
+    <div id="shortcuts-list"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
+
+// styles.css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin-top: 50px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.shortcut {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.shortcut h3 {
+  margin: 0;
+}
+
+// app.js
+const shortcuts = [
+  {
+    title: "Take a Screenshot",
+    description: "Press the Side Button and the Volume Up button at the same time."
+  },
+  {
+    title: "Quick App Switcher",
+    description: "Swipe up from the bottom and pause to open the app switcher."
+  },
+  {
+    title: "Back Tap",
+    description: "Double or triple tap the back of your iPhone to trigger actions. Set it up in Settings > Accessibility > Touch > Back Tap."
+  },
+  {
+    title: "Shake to Undo",
+    description: "Shake your phone to undo typing or actions."
+  },
+  {
+    title: "Control Center",
+    description: "Swipe down from the top-right corner to access Control Center."
+  }
+];
+
+const listContainer = document.getElementById("shortcuts-list");
+const searchInput = document.getElementById("search");
+
+function renderShortcuts(filter = "") {
+  listContainer.innerHTML = "";
+  const filtered = shortcuts.filter(s =>
+    s.title.toLowerCase().includes(filter.toLowerCase()) ||
+    s.description.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  filtered.forEach(shortcut => {
+    const div = document.createElement("div");
+    div.className = "shortcut";
+    div.innerHTML = `<h3>${shortcut.title}</h3><p>${shortcut.description}</p>`;
+    listContainer.appendChild(div);
+  });
+}
+
+searchInput.addEventListener("input", e => {
+  renderShortcuts(e.target.value);
+});
+
+// Initial render
+renderShortcuts();
